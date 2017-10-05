@@ -3,8 +3,8 @@
 ## ES6 template engine interface
 
 [![npm (scoped)](https://img.shields.io/npm/v/@dadi/web-es6-templates.svg?maxAge=10800&style=flat-square)](https://www.npmjs.com/package/@dadi/web-es6-templates)
-[![coverage](https://img.shields.io/badge/coverage-73%25-yellow.svg?style=flat?style=flat-square)](https://github.com/dadi/web-es6-templates)
-[![Build Status](https://travis-ci.org/dadi/web-es6-templates.svg?branch=master)](https://travis-ci.org/dadi/web-es6-templates)
+[![coverage](https://img.shields.io/badge/coverage-73%25-yellow.svg?style=flat?style=flat-square)](https://github.com/abovebored/web-es6-templates)
+[![Build Status](https://travis-ci.org/abovebored/web-es6-templates.svg?branch=master)](https://travis-ci.org/abovebored/web-es6-templates)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
 
 This module allows native [ES6 template literals](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals) to be used with [DADI Web](https://github.com/dadi/web).
