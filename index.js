@@ -21,10 +21,6 @@ module.exports = () => {
 
   const debug = require('debug')('web:templates:es6')
 
-  const es6 = require('es6-template-strings')
-  const compile = require('es6-template-strings/compile')
-  const resolveToString = require('es6-template-strings/resolve-to-string')
-
   const EngineES6 = function (options) {
     debug('Starting ES6 templates engine...')
 
@@ -33,6 +29,7 @@ module.exports = () => {
     this.helpers = options.helpers
     this.pagesPath = options.pagesPath
     this.templates = {}
+    this.partials = {}
   }
 
   /**
@@ -91,7 +88,7 @@ module.exports = () => {
             const templateName = path.relative(this.pagesPath, file)
               .slice(0, -extension.length).replace(/\//gmi, '_')
 
-            this.register(templateName, data)
+            this.partials[templateName] = data
 
             resolve(templateName)
           })
@@ -126,10 +123,10 @@ module.exports = () => {
   /**
     * Registers the template with markup.
     *
-    * @return {Promise} A Promise that resolves with the loaded data.
+    * @return Loaded template data.
     */
   EngineES6.prototype.register = function (name, data) {
-    this.templates[name] = compile(data)
+    return this.templates[name] = data
   }
 
   /**
@@ -143,22 +140,31 @@ module.exports = () => {
     * @return {Promise} A Promise that resolves with the render result.
     */
   EngineES6.prototype.render = function (name, data, locals, options) {
-    // Look for and resolve partials
-    this.templates[name].substitutions.map(i => {
-      if (i in this.templates) locals[i] = resolveToString(this.templates[i], locals)
-    })
+    // Merge in the template
+    locals = Object.assign(locals, this.partials)
 
+    // Make a list of the object keys for Funtion()
+    var names = Object.keys(locals)
+    var argNames = names.join(', ')
+
+    // Make the values a seperate obj
+    var argValues = names.map(name => { return locals[name] })
+
+    // Pass the keys only to the template
+    var resolver = new Function(argNames, `return \`${this.templates[name]}\``)
+
+    // Resolves the keys to the values
     return new Promise((resolve, reject) => {
       try {
-        resolve(resolveToString(this.templates[name], locals))
+        resolve(resolver.apply(null, argValues))
       }
-      catch (err) {
-        return reject({
-          name: 'web-es6-templates',
-          message: 'Error rendering template: ' + name,
-          stack: err
-        })
-      }
+       catch (err) {
+         return reject({
+           name: 'web-es6-templates',
+           message: 'Error rendering template: ' + name,
+           stack: err
+         })
+       }
     })
   }
 
