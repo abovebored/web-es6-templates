@@ -24,8 +24,7 @@
   "homepage": "https://github.com/dadi/web-es6-templates#readme",
   "dependencies": {
     "@dadi/logger": "^1.2.0",
-    "debug": "^2.6.6",
-    "es6-template-strings": "^2.0.1"
+    "debug": "^2.6.6"
   },
   "devDependencies": {
     "colors": "^1.1.2",
