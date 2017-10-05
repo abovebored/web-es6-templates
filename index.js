@@ -89,6 +89,7 @@ module.exports = () => {
               .slice(0, -extension.length).replace(/\//gmi, '_')
 
             this.partials[templateName] = data
+            this.register(templateName, data)
 
             resolve(templateName)
           })
