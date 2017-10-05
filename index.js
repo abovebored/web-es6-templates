@@ -89,7 +89,6 @@ module.exports = () => {
               .slice(0, -extension.length).replace(/\//gmi, '_')
 
             this.partials[templateName] = data
-            this.register(templateName, data)
 
             resolve(templateName)
           })
@@ -144,6 +143,11 @@ module.exports = () => {
     // Merge in the template
     locals = Object.assign(locals, this.partials)
 
+    // replace each partial reference in a template with the actual partial
+    Object.keys(this.partials).map(i => {
+      data = data.replace(new RegExp('\\${'+ i + '}', 'gm'), this.partials[i])
+    })
+
     // Make a list of the object keys for Funtion()
     var names = Object.keys(locals)
     var argNames = names.join(', ')
@@ -152,7 +156,7 @@ module.exports = () => {
     var argValues = names.map(name => { return locals[name] })
 
     // Pass the keys only to the template
-    var resolver = new Function(argNames, `return \`${this.templates[name]}\``)
+    var resolver = new Function(argNames, `return \`${data}\``)
 
     // Resolves the keys to the values
     return new Promise((resolve, reject) => {
