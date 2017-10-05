@@ -80,7 +80,7 @@ ${partials_header}
 <h2>Loop test</h2>
 
 <ul>
-  ${posts.results.map(i => '<li>' + i.attributes.title + '</li>').join('')}
+  ${posts.results.map(i => `<li>${i.attributes.title}</li>`).join('')}
 </ul>
 
 ${partials_footer}
