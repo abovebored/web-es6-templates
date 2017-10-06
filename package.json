@@ -1,5 +1,5 @@
 {
-  "name": "@dadi/web-es6-templates",
+  "name": "web-es6-templates",
   "version": "0.0.0-development",
   "description": "ES6 template engine interface for DADI Web",
   "main": "index.js",
