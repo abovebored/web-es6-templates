@@ -140,10 +140,7 @@ module.exports = () => {
     * @return {Promise} A Promise that resolves with the render result.
     */
   EngineES6.prototype.render = function (name, data, locals, options) {
-    // Merge in the template
-    locals = Object.assign(locals, this.partials)
-
-    // replace each partial reference in a template with the actual partial
+    // Replace each partial reference in a template with the actual partial
     Object.keys(this.partials).map(i => {
       data = data.replace(new RegExp('\\${'+ i + '}', 'gm'), this.partials[i])
     })
