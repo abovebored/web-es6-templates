@@ -3,10 +3,9 @@
 ## ES6 template engine interface
 
 [![npm (scoped)](https://img.shields.io/npm/v/@dadi/web-es6-templates.svg?maxAge=10800&style=flat-square)](https://www.npmjs.com/package/@dadi/web-es6-templates)
-[![coverage](https://img.shields.io/badge/coverage-73%25-yellow.svg?style=flat?style=flat-square)](https://github.com/dadi/web-es6-templates)
-[![Build Status](https://travis-ci.org/dadi/web-es6-templates.svg?branch=master)](https://travis-ci.org/dadi/web-es6-templates)
+[![coverage](https://img.shields.io/badge/coverage-73%25-yellow.svg?style=flat?style=flat-square)](https://github.com/abovebored/web-es6-templates)
+[![Build Status](https://travis-ci.org/abovebored/web-es6-templates.svg?branch=master)](https://travis-ci.org/abovebored/web-es6-templates)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
 
 This module allows native [ES6 template literals](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals) to be used with [DADI Web](https://github.com/dadi/web).
 
@@ -81,7 +80,7 @@ ${partials_header}
 <h2>Loop test</h2>
 
 <ul>
-  ${posts.results.map(i => '<li>' + i.attributes.title + '</li>').join('')}
+  ${posts.results.map(i => `<li>${i.attributes.title}</li>`).join('')}
 </ul>
 
 ${partials_footer}
