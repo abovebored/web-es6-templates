@@ -29,6 +29,20 @@ This module allows native [ES6 template literals](https://developer.mozilla.org/
 
 ## Usage
 
+### Config
+
+You can change the folder where your helpers are stored in your `config.xxx.json` file:
+
+```json
+  "engines": {
+    "es6": {
+      "paths": {
+        "helpers": "site/helpers"
+      }
+    }
+  }
+```
+
 ### Helpers
 
 The base directory for absolute paths is the `utils/helpers` directory.

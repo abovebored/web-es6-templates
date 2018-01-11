@@ -115,9 +115,8 @@ module.exports = () => {
       })
       .then(partials => {
         debug('partials loaded %o', partials)
-      })
-
-    debug('ES6 templates initialised')
+        debug('ES6 templates initialised')
+      })    
   }
 
   /**
