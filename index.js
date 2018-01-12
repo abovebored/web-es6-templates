@@ -24,12 +24,18 @@ module.exports = () => {
   const EngineES6 = function (options) {
     debug('Starting ES6 templates engine...')
 
-    this.additionalTemplates = options.additionalTemplates
     this.config = options.config
     this.helpers = options.helpers
     this.pagesPath = options.pagesPath
     this.templates = {}
     this.partials = {}
+
+    options.additionalTemplates.forEach(file => {
+      let extension = path.extname(file)
+      let templateName = path.relative(this.pagesPath, file).slice(0, -extension.length).replace(/\//gmi, '_')
+
+      this.partials[templateName] = fs.readFileSync(file, 'utf8')
+    })
   }
 
   /**
@@ -73,31 +79,6 @@ module.exports = () => {
   }
 
   /**
-  * Loads any additional templates.
-  *
-  * @return {Promise} The names of the partials loaded.
-  */
-  EngineES6.prototype._loadPartials = function () {
-    return helpers.readFiles(this.additionalTemplates, {
-      callback: file => {
-        return new Promise((resolve, reject) => {
-          fs.readFile(file, 'utf8', (err, data) => {
-            if (err) return reject(err)
-
-            const extension = path.extname(file)
-            const templateName = path.relative(this.pagesPath, file)
-              .slice(0, -extension.length).replace(/\//gmi, '_')
-
-            this.partials[templateName] = data
-
-            resolve(templateName)
-          })
-        })
-      }
-    })
-  }
-
-  /**
     * Initialises the engine.
     *
     * @return {Promise} A Promise that resolves when the engine is fully loaded.
@@ -110,13 +91,9 @@ module.exports = () => {
     return this._requireDirectory(helpersPath)
       .then(helpers => {
         debug('helpers loaded %o', helpers)
-
-        return this._loadPartials()
       })
-      .then(partials => {
-        debug('partials loaded %o', partials)
-        debug('ES6 templates initialised')
-      })    
+
+    debug('ES6 templates initialised')
   }
 
   /**
