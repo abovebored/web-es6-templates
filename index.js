@@ -28,9 +28,14 @@ module.exports = () => {
     this.helpers = options.helpers
     this.pagesPath = options.pagesPath
     this.templates = {}
+    this.additionalTemplates = options.additionalTemplates
     this.partials = {}
 
-    options.additionalTemplates.forEach(file => {
+    this._loadAdditionalTemplates()
+  }
+
+  EngineES6.prototype._loadAdditionalTemplates = function () {  
+    this.additionalTemplates.forEach(file => {
       let extension = path.extname(file)
       let templateName = path.relative(this.pagesPath, file).slice(0, -extension.length).replace(/\//gmi, '_')
 
@@ -87,6 +92,8 @@ module.exports = () => {
     const paths = this.config.get('engines.es6.paths')
 
     const helpersPath = path.resolve(paths.helpers)
+
+    this._loadAdditionalTemplates()
 
     return this._requireDirectory(helpersPath)
       .then(helpers => {
