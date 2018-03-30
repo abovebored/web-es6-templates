@@ -25,7 +25,7 @@ module.exports = () => {
     debug('Starting ES6 templates engine...')
 
     this.config = options.config
-    this.helpers = options.helpers
+    this.helpers = []
     this.pagesPath = options.pagesPath
     this.templates = {}
     this.additionalTemplates = options.additionalTemplates
@@ -76,7 +76,7 @@ module.exports = () => {
       })
       .then(files => {
         files.forEach(file => {
-          require(path.resolve(file))
+          Object.assign(this.helpers, require(path.resolve(file)))
         })
 
         return files
@@ -127,6 +127,9 @@ module.exports = () => {
     Object.keys(this.partials).map(i => {
       data = data.replace(new RegExp('\\${'+ i + '}', 'gm'), this.partials[i])
     })
+
+    // Add the helpers to the context
+    locals = Object.assign({}, locals, this.helpers)
 
     // Make a list of the object keys for Funtion()
     var names = Object.keys(locals)

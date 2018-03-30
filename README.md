@@ -52,7 +52,7 @@ Helpers are `required()` functions that can be embeded into templates to keep yo
 ```javascript
 var s = require('underscore.string/slugify')
 
-module.exports = slugify = (chunk) => {
+module.exports.slugify = (chunk) => {
   return s(chunk)
 }
 ```
